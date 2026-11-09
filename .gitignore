@@ -5,3 +5,5 @@ inventory/**/artifacts/
 *.key
 admin.conf
 *.retry
+# macOS
+.DS_Store

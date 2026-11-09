@@ -1,0 +1,7 @@
+.venv/
+inventory/**/credentials/
+inventory/**/artifacts/
+*.pem
+*.key
+admin.conf
+*.retry

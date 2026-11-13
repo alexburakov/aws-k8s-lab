@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: writer
+  namespace: db
+spec:
+  replicas: 1
+  selector:
+    matchLabels: {app: writer}
+  template:
+    metadata:
+      labels: {app: writer}
+    spec:
+      containers:
+        - name: writer
+          image: postgres:17-alpine
+          env:
+            - {name: PGHOST, value: postgresql.db.svc.cluster.local}
+            - {name: PGUSER, value: app}
+            - {name: PGDATABASE, value: app}
+            - {name: PGCONNECT_TIMEOUT, value: "2"}
+            - name: PGPASSWORD
+              valueFrom:
+                secretKeyRef: {name: postgresql, key: password}
+          command:
+            - sh
+            - -c
+            - |
+              until psql -qc 'CREATE TABLE IF NOT EXISTS beats(ts timestamptz NOT NULL)'; do sleep 1; done
+              while true; do
+                psql -qc 'INSERT INTO beats(ts) VALUES (now())' || echo "$(date +%T) insert failed"
+                sleep 1
+              done

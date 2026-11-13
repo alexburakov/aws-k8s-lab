@@ -1,0 +1,26 @@
+all:
+  vars:
+    ansible_user: ubuntu
+  hosts:
+%{ for name, ip in nodes ~}
+    ${name}:
+      ansible_host: ${ip}
+      ip: ${ip}
+      access_ip: ${ip}
+%{ endfor ~}
+  children:
+    kube_control_plane:
+      hosts:
+        cp1:
+    etcd:
+      hosts:
+        cp1:
+    kube_node:
+      hosts:
+%{ for name in workers ~}
+        ${name}:
+%{ endfor ~}
+    k8s_cluster:
+      children:
+        kube_control_plane:
+        kube_node:

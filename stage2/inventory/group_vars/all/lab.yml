@@ -1,0 +1,11 @@
+kube_network_plugin: cilium
+kube_owner: root
+helm_enabled: true
+metrics_server_enabled: true
+local_path_provisioner_enabled: true
+ingress_nginx_enabled: true
+ingress_nginx_host_network: true
+cert_manager_enabled: true
+
+kubeconfig_localhost: true
+kubectl_localhost: true

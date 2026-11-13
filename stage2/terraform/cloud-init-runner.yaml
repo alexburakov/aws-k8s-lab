@@ -1,0 +1,10 @@
+#cloud-config
+hostname: runner
+package_update: true
+packages:
+  - python3-venv
+  - python3-pip
+  - git
+  - tmux
+  - jq
+  - postgresql-client

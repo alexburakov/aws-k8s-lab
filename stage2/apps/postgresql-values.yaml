@@ -1,0 +1,10 @@
+auth:
+  username: app
+  password: app-password
+  database: app
+  postgresPassword: postgres-password
+
+primary:
+  persistence:
+    storageClass: local-path
+    size: 2Gi
